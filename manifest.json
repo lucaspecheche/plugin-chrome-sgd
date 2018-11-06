@@ -1,0 +1,27 @@
+{
+ "manifest_version": 2,
+ "name": "Facilidades SGD",
+ "description": "Ferramentas para facilitar em questões de suporte",
+ "browser_action": {
+	"default_popup": "popup.html"
+	},
+ "version": "6.0",
+ "content_scripts": [
+     {
+         "matches": ["https://sgd.dominiosistemas.com.br/sgsc/faces/sscs.html"],
+         "js": ["js/jquery.min.js", "js/app.js"]
+
+     }
+     ],
+ "permissions": [
+	"activeTab",
+	"storage",
+	"tabs",
+	"management",
+	"notifications"
+	],
+ "background": {
+    "scripts": ["js/jquery.min.js", "js/background.js"],
+    "persistent": true
+	}
+}
