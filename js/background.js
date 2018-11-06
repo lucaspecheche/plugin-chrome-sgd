@@ -35,6 +35,7 @@ chrome.runtime.onConnect.addListener(function(port) {
 /******************** STORAGE GESTOR  *************************/
 
 function getTime(port){
+    console.log("Getting....");
     chrome.storage.local.get(["up_time"], function (result) {
         var error = chrome.runtime.lastError;
         var data_time;
@@ -73,6 +74,7 @@ function getRsps(port, to){
 }
 
 function storageSS(data) {
+    console.log("Storage...");
     chrome.storage.local.get({[data.name]: []}, function (result) {
         var arraySS = result.arraySS;
         var array = data.data;
@@ -82,33 +84,32 @@ function storageSS(data) {
 
         if(Object.keys(arraySS).length != 0){
             if (arraySS.length != array.length) {
-                 saveData(copyData);
-                if (array.length < arraySS.length) {
-                    console.log("tela < storage");
-                  //  saveData(data);
-                }else{
-                    console.log("---Antes do Diference----");
-                        console.log(copyData);
-                    var difference = differences(arraySS, array);
-                    if(difference.length != 0){
+    
+                saveData(copyData);
+                console.log("---Antes do Diference----");
+                console.log(copyData);
+                var difference = differences(arraySS, array);
+                if(difference.length != 0){
 
-                        for(i in difference){
-                            notificar(difference[i]);
-                        }
-                       // saveData(copyData);
-                         console.log("----Pós Diference----");
-                        console.log(copyData);
-                    }
-                 //save differences or all
+                for(i in difference){
+                    notificar(difference[i]);
                 }
+
+                console.log("----Pós Diference----");
+                console.log(copyData);
+                }
+                 //save differences or all
+               // }
             }else{
                 console.log("Dados iguais");
             }
             
         }else{
             console.log("nao existe dados salvos");
-           // console.log(data);
             saveData(data);
+            for(i in data.data){
+                notificar(data.data[i]);
+            }
         }
 
     });
