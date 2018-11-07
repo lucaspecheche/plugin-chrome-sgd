@@ -74,41 +74,29 @@ function getRsps(port, to){
 }
 
 function storageSS(data) {
-    console.log("Storage...");
     chrome.storage.local.get({[data.name]: []}, function (result) {
         var arraySS = result.arraySS;
-        var array = data.data;
-        var copyData = data;
-        var save = true;
-        console.log(result);
+        var dataTela = [];
 
-        if(Object.keys(arraySS).length != 0){
-            if (arraySS.length != array.length) {
-    
-                saveData(copyData);
-                console.log("---Antes do Diference----");
-                console.log(copyData);
-                var difference = differences(arraySS, array);
-                if(difference.length != 0){
+        for(i in data.data){
+            dataTela.push(data.data[i]);
+        }
+
+        if(arraySS.length != 0){
+            var difference = differences(arraySS, dataTela);
+            if(difference.length > 0){
+                saveData(data);
 
                 for(i in difference){
                     notificar(difference[i]);
                 }
-
-                console.log("----Pós Diference----");
-                console.log(copyData);
-                }
-                 //save differences or all
-               // }
-            }else{
-                console.log("Dados iguais");
             }
             
         }else{
-            console.log("nao existe dados salvos");
+            console.log("Nao existe dados salvos");
             saveData(data);
-            for(i in data.data){
-                notificar(data.data[i]);
+            for(i in dataTela){
+                notificar(dataTela[i]);
             }
         }
 
@@ -116,8 +104,6 @@ function storageSS(data) {
 }
 
 function saveData(array) {
-    //console.log("Name: " + array.name);
-    //console.log(array);
     chrome.storage.local.set({[array.name]: array.data}, function () {
             chrome.storage.local.get([array.name], function (result) {
                 console.log("Dados Inseridos: ");

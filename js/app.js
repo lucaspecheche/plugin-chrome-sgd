@@ -40,6 +40,7 @@ function returnCall(response){
 	}
 
 	if (response.type == "getRsps") {
+		console.log('--- Escravo on ---- ');
 		slave(response.data);
 	}
 }
@@ -96,6 +97,8 @@ function slave(rsps) {
 	});
 
 	if(existsTable && situacao == "-1"){
+		console.log('-- Slave enviando dados --');
+		console.log(SSs);
 		com.postMessage({type: "storageSS", name: "arraySS", data: SSs});
 	}
 	
