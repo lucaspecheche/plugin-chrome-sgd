@@ -1,0 +1,7 @@
+//Operar com varios User ou Unico? troca todos/user
+//salvar lista de user notifica
+//clique e open notificacao ss
+//perdir permissons
+//mudar icones
+//desabilitar notificações
+//historico de notificvações

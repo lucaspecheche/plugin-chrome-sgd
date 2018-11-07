@@ -6,14 +6,6 @@ var time;
 
 com.onMessage.addListener(returnCall);
 
-//Operar com varios User ou Unico? troca todos/user
-//salvar lista de user notifica
-//clique e open notificacao ss
-//perdir permissons
-//mudar icones
-//desabilitar notificações
-//historico de notificvações
-
 $(function() {
 
 	com.postMessage({type: "getRsps", to: "actives"});
@@ -40,7 +32,6 @@ function returnCall(response){
 	}
 
 	if (response.type == "getRsps") {
-		console.log('--- Escravo on ---- ');
 		slave(response.data);
 	}
 }
@@ -97,8 +88,6 @@ function slave(rsps) {
 	});
 
 	if(existsTable && situacao == "-1"){
-		console.log('-- Slave enviando dados --');
-		console.log(SSs);
 		com.postMessage({type: "storageSS", name: "arraySS", data: SSs});
 	}
 	

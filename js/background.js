@@ -86,9 +86,12 @@ function storageSS(data) {
             var difference = differences(arraySS, dataTela);
             if(difference.length > 0){
                 saveData(data);
-
-                for(i in difference){
-                    notificar(difference[i]);
+                if (difference.length < 10) {
+                    for(i in difference){
+                        notificar(difference[i]);
+                    }
+                }else{
+                    alert("Vc tem mais de 10 solicitações");
                 }
             }
             
