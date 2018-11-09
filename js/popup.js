@@ -68,12 +68,15 @@ $('.button').on("click", function(element){
 	}
 });
 
+/******************* Tab Time ******************/
 
 $('#tabtime').on('click', function(){
 	tabClear();
 	$('#contentTime').css('display', 'block');
 	$(this).addClass('is-active');
 });
+
+/************* Tab Notificações ****************/
 
 $('#tabntfs').on('click', function(){
 	tabClear();
@@ -82,12 +85,6 @@ $('#tabntfs').on('click', function(){
 	$('#notactive').addClass('is-active');
 	removeResponsaveis();
 	com.postMessage({type: "getRsps", to: "actives"}); //recupa os responsaveis salvos
-});
-
-$('#tabconfig').on('click', function(){
-	tabClear();
-	$('#contentConfig').css('display', 'block');
-	$(this).addClass('is-active');
 });
 
 $('#notactive').on('click', function(){
@@ -107,17 +104,6 @@ $('#notdisable').on('click', function(){
 	removeResponsaveis();
 	com.postMessage({type: "getRsps", to: "disabled"});
 });
-
-
-function tabClear(){
-	$('#contentNtfs').css('display', 'none');
-	$('#contentConfig').css('display', 'none');
-	$('#contentTime').css('display', 'none');
-
-	$('.tabs li').each(function(p){
-		$(this).removeClass('is-active');
-	});
-}
 
 function removeResponsaveis(){
 	$('.responsaveis').each(function(i){
@@ -202,11 +188,37 @@ function differences(result, array) {
     }
 
     return array; //Array = Differences
-
 }
+
+
+/*************** Tab Configurações ****************/
+
+$('#tabconfig').on('click', function(){
+	tabClear();
+	$('#contentConfig').css('display', 'block');
+	$(this).addClass('is-active');
+	
+});
+
+$('#configRespAll').on('click', function(){
+	alert("Todos")
+});
+
+$('#configRespOther').on('click', function(){
+	alert("Outros")
+});
+
+
+
 
 function buttonOn (){
 	$('#bTimes').css('display', 'flex');
 	var element = $('#bOnOff');
 	element.html("Desativar");
 }
+
+
+$('input[type="radio"]').change(function() {
+	alert('clicked');
+  // Check input( $( this ).val() ) for validity here
+});

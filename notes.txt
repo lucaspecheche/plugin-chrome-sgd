@@ -5,3 +5,4 @@
 //mudar icones
 //desabilitar notificações
 //historico de notificvações
+//Verificar SS resposta da matriz
