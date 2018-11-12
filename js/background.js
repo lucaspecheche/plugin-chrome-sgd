@@ -42,7 +42,8 @@ function getTime(port){
         if(error){
             console.error(error);
         }
-        if(result.length === 0){
+
+        if(result.length === 0 || result.up_time.time === undefined){
             data_time = "default";
             console.log("Time é vazio");
         }else{
@@ -85,6 +86,13 @@ function storageSS(data) {
 
         if(arraySS.length != 0){
             var difference = differences(arraySS, dataTela);
+
+            console.log('-----------------------');
+        console.log(data);
+        console.log(result);
+        console.log(difference);
+        console.log('-----------------------');
+
             if(difference.length > 0){
                 saveData(data);
                 if (difference.length < 10) {
@@ -138,7 +146,7 @@ function updateData(array){
     });
 }
 
-function differences(result, array) {
+function differences(result, array) { //array = tela
     var iguais = [];
     var remove = [];
 
@@ -179,7 +187,7 @@ function notificar(array){
         "iconUrl": "img/logo.png"
     };
 
-    chrome.notifications.create(array.id, data, function() {
+    chrome.notifications.create(array.url, data, function() {
         var error = chrome.runtime.lastError;
         error ? console.error(error) : console.log('Evento criado!');
     });

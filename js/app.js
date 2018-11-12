@@ -7,9 +7,12 @@ var time;
 com.onMessage.addListener(returnCall);
 
 $(function() {
+	var situacao = $('select[name="relSscForm:situacao"]').val();
 
-	com.postMessage({type: "getRsps", to: "actives"});
-	com.postMessage({type: "getTime"}); //run
+	if (situacao == "-1") {
+		com.postMessage({type: "getRsps", to: "actives"});
+		com.postMessage({type: "getTime"}); //run
+	}
 
 });
 
@@ -64,7 +67,6 @@ function onChanged(update) {
 /************************ Captura dados tela ****************************/
 
 function slave(rsps) {
-	var situacao = $('select[name="relSscForm:situacao"]').val();
 	var SSs = [];
 	var respAtr = [];
 
@@ -88,13 +90,14 @@ function slave(rsps) {
 				objSS.id = $(tdTable[0]).html().trim();
 				objSS.assunto = $(tdTable[2]).children('a').html().trim();
 				objSS.responsavel = responsavel.trim();
+				objSS.url = $(tdTable[2]).children('a').attr('href').substring(25);
 				SSs.push(objSS);
 			}
 		}
 		existsTable = true;
 	});
 
-	if(existsTable && situacao == "-1"){
+	if(existsTable){
 		com.postMessage({type: "storageSS", name: "arraySS", data: SSs});
 	}
 	

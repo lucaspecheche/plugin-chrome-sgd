@@ -218,7 +218,7 @@ $('#configRespOther').on('click', function(){
 });
 
 
-
+/******************************************/
 
 function buttonOn (){
 	$('#bTimes').css('display', 'flex');
@@ -226,8 +226,3 @@ function buttonOn (){
 	element.html("Desativar");
 }
 
-
-$('input[type="radio"]').change(function() {
-	alert('clicked');
-  // Check input( $( this ).val() ) for validity here
-});
