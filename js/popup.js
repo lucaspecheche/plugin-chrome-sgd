@@ -29,8 +29,7 @@ function returnCall(response){
             	createEleResposaveisDisable(response.data);
         	else
         		createEleResposaveisActive(response.data);
-
-        	
+	
             break;
 
         default:
@@ -193,11 +192,21 @@ function differences(result, array) {
 
 /*************** Tab Configurações ****************/
 
+function tabClear(){
+	$('#contentNtfs').css('display', 'none');
+	$('#contentConfig').css('display', 'none');
+	$('#contentTime').css('display', 'none');
+
+	$('.tabs li').each(function(p){
+		$(this).removeClass('is-active');
+	});
+}
+
 $('#tabconfig').on('click', function(){
 	tabClear();
 	$('#contentConfig').css('display', 'block');
 	$(this).addClass('is-active');
-	
+
 });
 
 $('#configRespAll').on('click', function(){

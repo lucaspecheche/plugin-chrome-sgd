@@ -42,7 +42,7 @@ function getTime(port){
         if(error){
             console.error(error);
         }
-        if(Object.keys(result).length === 0){
+        if(result.length === 0){
             data_time = "default";
             console.log("Time é vazio");
         }else{
@@ -60,11 +60,12 @@ function getRsps(port, to){
         if(error){
             console.error(error);
         }
-        if(Object.keys(result).length === 0){
+        if(result.length === 0){
             console.log("Responsaveis vazio");
         }else{
             data = result.responsaveis;
         }
+
         if(to == "disabled"){
             port.postMessage({type: "getRsps", to: "disabled", data: data});
         }else{

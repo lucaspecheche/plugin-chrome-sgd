@@ -20,7 +20,15 @@ function returnCall(response){
 	if(response.type == "getTime"){
 
 		clearInterval(update);
-		isNumber(response.data) ? time = response.data : time = time_default;
+
+		if(isNumber(response.data)){
+			time = response.data;
+		}else{
+			var data = new Object();
+			data.time = time_default;
+			com.postMessage({type: "setTime", name: "up_time", data: data});
+			time = time_default;
+		}
 
 		if (time != 0 && time != 1) {
 			update = setInterval(function(){
@@ -49,7 +57,6 @@ function onChanged(update) {
 				data_element.click();
 			}, newUp_time);
 		}
-		//chrome.tabs.reload();
 	});
 }
 
