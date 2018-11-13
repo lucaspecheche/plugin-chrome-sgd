@@ -42,14 +42,13 @@ function getTime(port){
         if(error){
             console.error(error);
         }
-
-        if(result.length === 0){ //|| result.up_time.time === undefined
+        if(result.length === 0 || result.up_time === undefined){ //
             data_time = "default";
             console.log("Time é vazio");
         }else{
             data_time = result.up_time.time;
         }
-        
+        console.log(data_time);
         port.postMessage({type: "getTime", data: data_time});
     });
 }

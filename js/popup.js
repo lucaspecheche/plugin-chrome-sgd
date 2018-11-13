@@ -146,7 +146,7 @@ function createEleResposaveisDisable (data){
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     	chrome.tabs.executeScript(tabs[0].id, {file: "js/getResponsaveis.js"}, function(response){
     		var error = chrome.runtime.lastError;
-    		error ? console.error(error) : console.log("Retornou");
+    		error == true ? console.error(error) : console.log("Retornou");
 
     		var difResponsavel = differences(data, response[0]);
 
