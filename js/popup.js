@@ -20,6 +20,7 @@ function returnCall(response){
 					var element = $(('#'+time)).children('a');
 					element.removeClass('is-outlined');
 					element.addClass('is-active');
+					com.postMessage({type: "getTime"}); //run
 	           	}
 
 	        break;
@@ -55,10 +56,12 @@ $('.button').on("click", function(element){
 
 		case 'Atualizar':
 			alterResposaveis("update");
+			setTimeout(function(){$('#notactive').click()}, 500);
 			break;
 
 		case 'Adicionar':
 			alterResposaveis("add");
+			setTimeout(function(){$('#notactive').click()}, 500);
 			break;
 
 		default:

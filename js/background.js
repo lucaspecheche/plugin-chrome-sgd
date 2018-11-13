@@ -43,7 +43,7 @@ function getTime(port){
             console.error(error);
         }
 
-        if(result.length === 0 || result.up_time.time === undefined){
+        if(result.length === 0){ //|| result.up_time.time === undefined
             data_time = "default";
             console.log("Time é vazio");
         }else{
