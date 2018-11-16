@@ -20,7 +20,6 @@ function returnCall(response){
 					var element = $(('#'+time)).children('a');
 					element.removeClass('is-outlined');
 					element.addClass('is-active');
-					com.postMessage({type: "getTime"}); //run
 	           	}
 
 	        break;
@@ -143,24 +142,30 @@ function setEleResposaveis(data, to){
 }
 
 function createEleResposaveisDisable (data){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    	chrome.tabs.executeScript(tabs[0].id, {file: "js/getResponsaveis.js"}, function(response){
-    		var error = chrome.runtime.lastError;
-    		error == true ? console.error(error) : console.log("Retornou");
+	if(data.length < 1){
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+	    	chrome.tabs.executeScript(tabs[0].id, {file: "js/getResponsaveis.js"}, function(response){
+	    		var error = chrome.runtime.lastError;
+	    		error == true ? console.error(error) : console.log("Retornou");
+	    		var difResponsavel = [];
+	    		if(response != undefined){
+	    			difResponsavel = differences(data, response[0]);
+	    		}
 
-    		var difResponsavel = differences(data, response[0]);
-
-    		for(i in difResponsavel){
-    			html = '<label class="panel-block responsaveis rspDisable">';
-				html += '<input type="checkbox">';
-				html += '<span>';
-				html += difResponsavel[i];
-				html += '</span>';
-				html += '</label>';
-				$('#namesSelect').append(html);
-    		}
-    	});
-    });
+	    		for(i in difResponsavel){
+	    			html = '<label class="panel-block responsaveis rspDisable">';
+					html += '<input type="checkbox">';
+					html += '<span>';
+					html += difResponsavel[i];
+					html += '</span>';
+					html += '</label>';
+					$('#namesSelect').append(html);
+	    		}
+	    	});
+	    });
+	}else{
+		$('#modalAlert').toggleClass('is-active');
+	}
 }
 
 function differences(result, array) {
@@ -209,8 +214,11 @@ $('#tabconfig').on('click', function(){
 	tabClear();
 	$('#contentConfig').css('display', 'block');
 	$(this).addClass('is-active');
+	$('#configPermissionUser').addClass('is-active');
 
 });
+
+//Responsaveis
 
 $('#configRespAll').on('click', function(){
 	alert("Todos")
@@ -220,6 +228,23 @@ $('#configRespOther').on('click', function(){
 	alert("Outros")
 });
 
+//Permissions
+
+$('#configPermissionUser').on('click', function(){
+	alert("user")
+});
+
+$('#configPermissionAdmin').on('click', function(){
+	$('#modalPass').toggleClass('is-active');
+});
+
+$('#btnCloseModalPass').on('click', function(){
+	$('#modalPass').toggleClass('is-active');
+});
+
+$('#btnCloseModalPass').on('click', function(){
+	$('#modalPass').toggleClass('is-active');
+});
 
 /******************************************/
 
