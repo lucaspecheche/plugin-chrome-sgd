@@ -1,3 +1,6 @@
+console.log("Background Run...");
+setPermissionDefault("user");
+
 chrome.runtime.onConnect.addListener(function(port) {
 
     if(port.name == "com"){
@@ -22,6 +25,14 @@ chrome.runtime.onConnect.addListener(function(port) {
                 
                 case "setRsps":
                     value.action == "add" ? updateData(value) : saveData(value);
+                    break;
+
+                case "getPermission":
+                    getPermission(port);
+                    break;
+
+                case "setPermission":
+                    setPermission(value.data);
                     break;
 
                 default:
@@ -54,22 +65,22 @@ function getTime(port){
 }
 
 function getRsps(port, to){
-    chrome.storage.local.get(["responsaveis"], function (result) {
+    chrome.storage.local.get(["responsaveis", "permission_role"], function (result) {
         var error = chrome.runtime.lastError;
-        var data;
+        var data = [];
         if(error){
             console.error(error);
         }
-        if(result.length === 0){
+        if((result.responsaveis).length === 0){
             console.log("Responsaveis vazio");
         }else{
             data = result.responsaveis;
         }
-
+        console.log(result);
         if(to == "disabled"){
-            port.postMessage({type: "getRsps", to: "disabled", data: data});
+            port.postMessage({type: "getRsps", to: "disabled", data: data, role: result.permission_role});
         }else{
-            port.postMessage({type: "getRsps", to: "active", data: data});
+            port.postMessage({type: "getRsps", to: "active", data: data, role: result.permission_role});
         }
     });
 }
@@ -173,8 +184,11 @@ function differences(result, array) { //array = tela
 }
 
 /********************************************/
+function setPermission(role){
+    saveData({name: "permission_role", data: role});
+}
 
-
+/*******************************************/
 
 function notificar(array){
     //console.log(array);
@@ -197,6 +211,18 @@ chrome.notifications.onClicked.addListener(function(id, byUser) {
     var urlSS= "https://sgd.dominiosistemas.com.br/sgsc/faces/ssc.html?ssc="+id;
     chrome.tabs.create({url: urlSS}); 
 });
+
+function setPermissionDefault(role){
+    chrome.storage.local.get(["permission_role"], function (result) {
+        if (result.permission_role == undefined) {
+            console.log("Permission Undefined");
+            setPermission(role);
+        }else{
+            console.log("Você tem permissoes definidas");
+        }
+    });
+}
+
 
 function isNumber(n) {
     return !isNaN(parseInt(n)) && isFinite(n);

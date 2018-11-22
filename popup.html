@@ -93,7 +93,7 @@
 	</div>
 </div>
 
-<!--------------- ABA CONFIGURAÇÕES ------------------------>
+<!--------------- TAB CONFIGURAÇÕES ------------------------>
 
 <div id="contentConfig" style="display: none;">
     <div class="tabs is-toggle is-centered is-small is-fullwidth">
@@ -134,32 +134,35 @@
 	
 </div>
 
-<!-- MODALS -->
+<!----------------- MODALS ----------------------->
+
 <div id="modalPass" class="modal">
 	<div class="modal-background"></div>
 	<div class="modal-content">
-
+		<div id="passIncorreta" style="display: none;">
+			Senha Inválida.
+		</div>
 		<div class="field">
 			<p class="control has-icons-left">
-				<input class="input is-small is-info" type="password" placeholder="Senha">
+				<input id="InputModelPassword" class="input is-small is-info" type="password" placeholder="Senha">
 				<span class="icon is-small is-left">
 					<i class="fas fa-lock"></i>
 				</span>
 			</p>
 		</div>
-		<a class="button is-success is-small">Confirmar</a>
+		<a class="button is-success is-small"><span>Confirmar Admin</span></a>
 
 	</div>
-	<button id="btnCloseModalAlert" class="modal-close is-large" aria-label="close"></button>
+	<button id="btnCloseModalPass" class="modal-close is-large" aria-label="close"></button>
 </div>
 
 <div id="modalAlert" class="modal">
 	<div class="modal-background"></div>
 	<div class="modal-content">
-		<p>Você não possui privilegios para adicionar mais de um usuário.</p>
+		<p>Você não possui privilegios para receber notificações de outros usuário.</p>
 
 	</div>
-	<button id="btnCloseModalPass" class="modal-close is-large" aria-label="close"></button>
+	<button id="btnCloseModalAlert" class="modal-close is-large" aria-label="close"></button>
 </div>
 	
 </div>

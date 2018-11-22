@@ -1,6 +1,7 @@
 var com = chrome.runtime.connect({name: "com"});
 com.onMessage.addListener(returnCall);
 var time_default = 10000;
+var senhaAdmin = "sgd1973";
 
 com.postMessage({type: "getTime"}); //run
 
@@ -25,11 +26,8 @@ function returnCall(response){
 	        break;
 
         case "getRsps":
-        	if(response.to == "disabled")
-            	createEleResposaveisDisable(response.data);
-        	else
-        		createEleResposaveisActive(response.data);
-	
+        	//alert(response.role);
+        	response.to == "disabled" ? createEleResposaveisDisable(response.data, response.role) : createEleResposaveisActive(response.data);
             break;
 
         default:
@@ -63,6 +61,18 @@ $('.button').on("click", function(element){
 			setTimeout(function(){$('#notactive').click()}, 500);
 			break;
 
+		case 'Confirmar Admin':
+			var pass = $('#InputModelPassword').val();
+			if(pass == senhaAdmin){
+				com.postMessage({type: "setPermission", data: "admin"});
+				setTimeout(function(){$('#tabconfig').click()}, 200);
+				$('#modalPass').toggleClass('is-active');
+			}else{
+				$('#passIncorreta').css('display', 'block');
+			}
+			
+			break;
+
 		default:
 			data.time = (parseInt(value)*1000);
 			com.postMessage({type: "setTime", name: "up_time", data: data});
@@ -85,6 +95,7 @@ $('#tabntfs').on('click', function(){
 	$(this).addClass('is-active');
 	$('#notactive').addClass('is-active');
 	removeResponsaveis();
+	console.log("getting responsaveis");
 	com.postMessage({type: "getRsps", to: "actives"}); //recupa os responsaveis salvos
 });
 
@@ -141,8 +152,8 @@ function setEleResposaveis(data, to){
 	com.postMessage({type: "setRsps", action: to, name: "responsaveis", data: data});
 }
 
-function createEleResposaveisDisable (data){
-	if(data.length < 1){
+function createEleResposaveisDisable (data, role){
+	if(role == "user" && data.length < 1 || role == "admin"){
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 	    	chrome.tabs.executeScript(tabs[0].id, {file: "js/getResponsaveis.js"}, function(response){
 	    		var error = chrome.runtime.lastError;
@@ -197,7 +208,6 @@ function differences(result, array) {
     return array; //Array = Differences
 }
 
-
 /*************** Tab Configurações ****************/
 
 function tabClear(){
@@ -214,8 +224,7 @@ $('#tabconfig').on('click', function(){
 	tabClear();
 	$('#contentConfig').css('display', 'block');
 	$(this).addClass('is-active');
-	$('#configPermissionUser').addClass('is-active');
-
+	loadPermission();
 });
 
 //Responsaveis
@@ -230,8 +239,23 @@ $('#configRespOther').on('click', function(){
 
 //Permissions
 
+function loadPermission(){
+	var user = $('#configPermissionUser');
+	var admin = $('#configPermissionAdmin');
+	chrome.storage.local.get(["permission_role"], function (result) {
+	if(result.permission_role == "user"){
+		$(user).addClass('is-active');
+		$(admin).removeClass('is-active');
+	}else{
+		$(user).removeClass('is-active');
+		$(admin).addClass('is-active');
+	}
+});
+}
+
 $('#configPermissionUser').on('click', function(){
-	alert("user")
+	com.postMessage({type: "setPermission", data: "user"});
+	setTimeout(function(){$('#tabconfig').click()}, 200);
 });
 
 $('#configPermissionAdmin').on('click', function(){
@@ -242,8 +266,8 @@ $('#btnCloseModalPass').on('click', function(){
 	$('#modalPass').toggleClass('is-active');
 });
 
-$('#btnCloseModalPass').on('click', function(){
-	$('#modalPass').toggleClass('is-active');
+$('#btnCloseModalAlert').on('click', function(){
+	$('#modalAlert').toggleClass('is-active');
 });
 
 /******************************************/

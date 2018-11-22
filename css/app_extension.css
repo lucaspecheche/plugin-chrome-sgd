@@ -17,3 +17,7 @@ html, body {
 .modal-content p {
 	color: #fff;
 }
+
+#passIncorreta{
+	color: red;
+}
