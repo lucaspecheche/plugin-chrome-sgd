@@ -68,15 +68,19 @@ function getRsps(port, to){
     chrome.storage.local.get(["responsaveis", "permission_role"], function (result) {
         var error = chrome.runtime.lastError;
         var data = [];
+        console.log("Result getRsps...");
+        console.log(result);
+        console.log("-------------");
         if(error){
             console.error(error);
         }
-        if((result.responsaveis).length === 0){
+
+        if(result.responsaveis == undefined){
             console.log("Responsaveis vazio");
         }else{
             data = result.responsaveis;
         }
-        console.log(result);
+
         if(to == "disabled"){
             port.postMessage({type: "getRsps", to: "disabled", data: data, role: result.permission_role});
         }else{
