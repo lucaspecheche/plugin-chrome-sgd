@@ -7,7 +7,7 @@ function getResposaveis(){
 		var tdTable = $(this).children('td');
 		var responsavel = ($(tdTable[4]).html()).trim();
 		if(responsavel != "-"){
-			var str = responsavel.substring(16)
+			var str = responsavel.substring(11)
 			resp.push(str);
 		}
 	});

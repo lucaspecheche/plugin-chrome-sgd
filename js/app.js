@@ -71,7 +71,7 @@ function slave(rsps) {
 	var respAtr = [];
 
 	for(i in rsps){
-		var conc = "Novo Oeste MS - "+rsps[i];
+		var conc = "Novo Oeste "+rsps[i];
 		respAtr.push(conc);
 	}
 	
