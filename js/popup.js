@@ -45,6 +45,7 @@ $('.button').on("click", function(element){
 		case 'Desativar':
 			data.time = 0;
 			com.postMessage({type: "setTime", name: "up_time", data: data});
+			setTimeout(function(){$('#tabtime').click()}, 100);
 			break;
 
 		case 'Ativar':
@@ -53,12 +54,12 @@ $('.button').on("click", function(element){
 
 		case 'Atualizar':
 			alterResposaveis("update");
-			setTimeout(function(){$('#notactive').click()}, 500);
+			setTimeout(function(){$('#notactive').click()}, 300);
 			break;
 
 		case 'Adicionar':
 			alterResposaveis("add");
-			setTimeout(function(){$('#notactive').click()}, 500);
+			setTimeout(function(){$('#notactive').click()}, 300);
 			break;
 
 		case 'Confirmar Admin':
@@ -76,6 +77,7 @@ $('.button').on("click", function(element){
 		default:
 			data.time = (parseInt(value)*1000);
 			com.postMessage({type: "setTime", name: "up_time", data: data});
+			setTimeout(function(){$('#tabtime').click()}, 100);
 	}
 });
 
@@ -85,7 +87,16 @@ $('#tabtime').on('click', function(){
 	tabClear();
 	$('#contentTime').css('display', 'block');
 	$(this).addClass('is-active');
+
+	$("#bTimes").children('div').children('a').each(function(i){
+		$(this).removeClass();
+		$(this).addClass("button is-info is-outlined is-small");
+	});
+
+
+	com.postMessage({type: "getTime"}); //run
 });
+
 
 /************* Tab Notificações ****************/
 
