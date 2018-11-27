@@ -92,6 +92,7 @@ function slave(rsps) {
 				objSS.responsavel = responsavel.trim();
 				objSS.url = $(tdTable[2]).children('a').attr('href').substring(25);
 				SSs.push(objSS);
+				//$(tdTable[6]).children('img').at
 			}
 		}
 		existsTable = true;

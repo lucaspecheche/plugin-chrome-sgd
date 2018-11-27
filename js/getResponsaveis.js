@@ -12,7 +12,7 @@ function getResposaveis(){
 		}
 	});
 
-	var respFilter = resp.filter(function(este, i) {
+	var respFilter = resp.filter(function(este, i) { //Remove itens repetidos
     	return resp.indexOf(este) == i;
 	});
 
