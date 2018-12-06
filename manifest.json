@@ -5,10 +5,11 @@
  "browser_action": {
 	"default_popup": "popup.html"
 	},
- "version": "1.0",
+ "version": "1.2",
  "icons": { 
- 	"48": "img/headset.png",
- 	"128": "img/headset.png"
+ 	"16": "img/support16.png",
+    "48": "img/support48.png",
+    "128": "img/support128.png"
  	},
  "content_scripts": [
      {
