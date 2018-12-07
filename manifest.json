@@ -1,11 +1,15 @@
 {
  "manifest_version": 2,
- "name": "Novo Oeste Facilidades SGD",
+ "name": "Facilidades SGD",
  "description": "Ferramentas para facilitar a gestão de solicitações no suporte",
  "browser_action": {
-	"default_popup": "popup.html"
+	"default_popup": "popup.html",
+	"default_icon": {
+    	"16": "img/support16.png",
+    	"32": "img/support32.png"
+    }
 	},
- "version": "1.0",
+ "version": "1.1",
  "icons": { 
  	"16": "img/support16.png",
     "48": "img/support48.png",
