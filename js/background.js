@@ -205,6 +205,8 @@ function notificar(array){
     };
 
     chrome.notifications.create(array.url, data, function() {
+        var audio = new Audio('song/solemn.mp3');
+        audio.play();
         var error = chrome.runtime.lastError;
         error ? console.error(error) : console.log('Evento criado!');
     });
