@@ -1,5 +1,6 @@
 console.log("Background Run...");
 setPermissionDefault("user");
+setConfigSongDefault("off");
 
 chrome.runtime.onConnect.addListener(function(port) {
 
@@ -33,6 +34,10 @@ chrome.runtime.onConnect.addListener(function(port) {
 
                 case "setPermission":
                     setPermission(value.data);
+                    break;
+
+                case "setConfigSong":
+                    setConfigSong(value.data);
                     break;
 
                 default:
@@ -101,7 +106,7 @@ function storageSS(data) {
         if(arraySS.length != 0){
             var difference = differences(arraySS, dataTela);
 
-            console.log('-----------------------');
+        console.log('-----------------------');
         console.log(data);
         console.log(result);
         console.log(difference);
@@ -114,7 +119,7 @@ function storageSS(data) {
                         notificar(difference[i]);
                     }
                 }else{
-                    alert("Vc tem mais de 10 solicitações");
+                    console.log("Vc tem mais de 10 solicitações");
                 }
             }
             
@@ -187,15 +192,8 @@ function differences(result, array) { //array = tela
 
 }
 
-/********************************************/
-function setPermission(role){
-    saveData({name: "permission_role", data: role});
-}
-
-/*******************************************/
-
+/***************** NOTIFICA ********************/
 function notificar(array){
-    //console.log(array);
 
     var data = {
         "type": "basic",
@@ -205,10 +203,15 @@ function notificar(array){
     };
 
     chrome.notifications.create(array.url, data, function() {
-        var audio = new Audio('song/solemn.mp3');
-        audio.play();
         var error = chrome.runtime.lastError;
         error ? console.error(error) : console.log('Evento criado!');
+
+        chrome.storage.local.get(["config_song"], function (result) {
+            if (result.config_song == "on") {
+                var audio = new Audio('song/appointed.mp3');
+                audio.play();
+            }
+        });
     });
 
 }
@@ -217,6 +220,16 @@ chrome.notifications.onClicked.addListener(function(id, byUser) {
     var urlSS= "https://sgd.dominiosistemas.com.br/sgsc/faces/ssc.html?ssc="+id;
     chrome.tabs.create({url: urlSS}); 
 });
+
+/////////////////////////////////////////////////////////////////////////
+
+function setPermission(role){
+    saveData({name: "permission_role", data: role});
+}
+
+function setConfigSong(status){
+    saveData({name: "config_song", data: status});
+}
 
 function setPermissionDefault(role){
     chrome.storage.local.get(["permission_role"], function (result) {
@@ -229,6 +242,18 @@ function setPermissionDefault(role){
     });
 }
 
+function setConfigSongDefault(status){
+    chrome.storage.local.get(["config_song"], function (result) {
+        if (result.config_song == undefined) {
+            console.log("Song Undefined");
+            setConfigSong(status);
+        }else{
+            console.log("Você tem tem configurações de Som definidas");
+        }
+    });
+}
+
+////////////////////////////////////////////////////////////////
 
 function isNumber(n) {
     return !isNaN(parseInt(n)) && isFinite(n);

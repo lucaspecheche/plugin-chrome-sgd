@@ -236,16 +236,7 @@ $('#tabconfig').on('click', function(){
 	$('#contentConfig').css('display', 'block');
 	$(this).addClass('is-active');
 	loadPermission();
-});
-
-//Responsaveis
-
-$('#configRespAll').on('click', function(){
-	alert("Todos")
-});
-
-$('#configRespOther').on('click', function(){
-	alert("Outros")
+	loadConfigSong();
 });
 
 //Permissions
@@ -254,14 +245,14 @@ function loadPermission(){
 	var user = $('#configPermissionUser');
 	var admin = $('#configPermissionAdmin');
 	chrome.storage.local.get(["permission_role"], function (result) {
-	if(result.permission_role == "user"){
-		$(user).addClass('is-active');
-		$(admin).removeClass('is-active');
-	}else{
-		$(user).removeClass('is-active');
-		$(admin).addClass('is-active');
-	}
-});
+		if(result.permission_role == "user"){
+			$(user).addClass('is-active');
+			$(admin).removeClass('is-active');
+		}else{
+			$(user).removeClass('is-active');
+			$(admin).addClass('is-active');
+		}
+	});
 }
 
 $('#configPermissionUser').on('click', function(){
@@ -281,6 +272,32 @@ $('#btnCloseModalAlert').on('click', function(){
 	$('#modalAlert').toggleClass('is-active');
 });
 
+// Configurãção Song 
+
+function loadConfigSong(){
+	var on = $('#configSongOn');
+	var off = $('#configSongOff');
+	chrome.storage.local.get(["config_song"], function (result) {
+		if(result.config_song == "on"){
+			$(on).addClass('is-active');
+			$(off).removeClass('is-active');
+		}else{
+			$(on).removeClass('is-active');
+			$(off).addClass('is-active');
+		}
+	});
+}
+
+$('#configSongOn').on('click', function(){
+	com.postMessage({type: "setConfigSong", data: "on"});
+	setTimeout(function(){$('#tabconfig').click()}, 200);
+});
+
+$('#configSongOff').on('click', function(){
+	com.postMessage({type: "setConfigSong", data: "off"});
+	setTimeout(function(){$('#tabconfig').click()}, 200);
+});
+
 /******************************************/
 
 function buttonOn (){
@@ -288,4 +305,3 @@ function buttonOn (){
 	var element = $('#bOnOff');
 	element.html("Desativar");
 }
-

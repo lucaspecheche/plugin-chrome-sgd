@@ -4,6 +4,8 @@
       "updates": [
         { "version": "1.1",
           "update_link": "https://updateplugin.llprojetos.ml/sgdv1.1.xpi" }
+          { "version": "1.2",
+          "update_link": "https://updateplugin.llprojetos.ml/sgdv1.2.xpi" }
       ]
     }
   }
