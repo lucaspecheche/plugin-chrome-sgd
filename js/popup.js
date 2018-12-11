@@ -106,7 +106,6 @@ $('#tabntfs').on('click', function(){
 	$(this).addClass('is-active');
 	$('#notactive').addClass('is-active');
 	removeResponsaveis();
-	console.log("getting responsaveis");
 	com.postMessage({type: "getRsps", to: "actives"}); //recupa os responsaveis salvos
 });
 
@@ -145,6 +144,20 @@ function alterResposaveis(action){
 
 	setEleResposaveis(responsaveis, action);
 	console.log(responsaveis);
+
+	/* Bug Add mais de um usuário
+	chrome.storage.local.get(["responsaveis", "permission_role"], function (result) {
+		var resp = result.responsaveis;
+		var role = result.permission_role;
+
+		if(role == "user" && resp.length < 1 || role == "admin" || action == "update"){
+			setEleResposaveis(responsaveis, action);
+			console.log(responsaveis);
+		}else{
+			$('#modalAlert').toggleClass('is-active');
+		}
+	});*/
+	
 }
 
 function createEleResposaveisActive(data){

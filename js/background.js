@@ -194,10 +194,21 @@ function differences(result, array) { //array = tela
 
 /***************** NOTIFICA ********************/
 function notificar(array){
+console.log("===== Notifica Array ====== ");
+console.log(array);
+
+    var title = "";
+
+    if(array.responsavel == "-")
+        title = "Existe uma nova solicitação";
+    else{
+        title = "Resposta para " + array.responsavel.substring(14);
+        //alert(title);
+    }
 
     var data = {
         "type": "basic",
-        "title": "Existe uma nova solicitação",
+        "title": title,
         "message": array.id + " - " + (array.assunto).toLowerCase(),
         "iconUrl": "img/logo.png"
     };
