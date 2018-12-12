@@ -18,7 +18,7 @@
  	},
  "content_scripts": [
      {
-         "matches": ["https://sgd.dominiosistemas.com.br/sgsc/faces/sscs.html"],
+         "matches": ["https://sgd.dominiosistemas.com.br/sgsc/faces/sscs.html", "https://sgd.legalone.com.br/sgsc/faces/sscs.html"],
          "js": ["js/jquery.min.js", "js/app.js"]
      }
      ],

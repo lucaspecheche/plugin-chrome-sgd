@@ -23,3 +23,7 @@ html, body {
 #passIncorreta{
 	color: red;
 }
+
+#configSongOn{
+	padding-left: 50px;
+}

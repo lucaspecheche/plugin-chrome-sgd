@@ -197,20 +197,22 @@ function notificar(array){
 console.log("===== Notifica Array ====== ");
 console.log(array);
 
-    var title = "";
+    var title = "Existe uma nova solicitação";
+    var icon = "img/logo.png";
 
-    if(array.responsavel == "-")
+    if(array.responsavel == "-"){
         title = "Existe uma nova solicitação";
-    else{
+        icon = "img/newSS.png";
+    }else{
         title = "Resposta para " + array.responsavel.substring(14);
-        //alert(title);
+        icon = "img/returnSS.png";
     }
 
     var data = {
         "type": "basic",
         "title": title,
         "message": array.id + " - " + (array.assunto).toLowerCase(),
-        "iconUrl": "img/logo.png"
+        "iconUrl": icon
     };
 
     chrome.notifications.create(array.url, data, function() {
